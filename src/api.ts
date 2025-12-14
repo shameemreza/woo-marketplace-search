@@ -15,7 +15,9 @@ interface AlgoliaRequest {
   params?: string;
 }
 
-async function searchAlgolia<T>(requests: AlgoliaRequest[]): Promise<AlgoliaMultiResponse<T>> {
+async function searchAlgolia<T>(
+  requests: AlgoliaRequest[],
+): Promise<AlgoliaMultiResponse<T>> {
   const response = await fetch(ALGOLIA_BASE_URL, {
     method: "POST",
     headers: {
@@ -68,13 +70,13 @@ export async function searchDocs(query: string): Promise<WooDoc[]> {
 // Decode HTML entities (&#8211; -> en-dash, &amp; -> &, etc.)
 export function decodeHtmlEntities(text: string | undefined): string {
   if (!text) return "";
-  
+
   // Common HTML entities
   const entities: Record<string, string> = {
     "&amp;": "&",
     "&lt;": "<",
     "&gt;": ">",
-    "&quot;": "\"",
+    "&quot;": '"',
     "&apos;": "'",
     "&nbsp;": " ",
     "&ndash;": "\u2013",
@@ -90,25 +92,35 @@ export function decodeHtmlEntities(text: string | undefined): string {
   };
 
   let result = text;
-  
+
   // Replace named entities
   for (const [entity, char] of Object.entries(entities)) {
     result = result.replace(new RegExp(entity, "gi"), char);
   }
-  
+
   // Replace numeric entities (&#8211; -> en-dash)
-  result = result.replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
-  
+  result = result.replace(/&#(\d+);/g, (_, code) =>
+    String.fromCharCode(parseInt(code, 10)),
+  );
+
   // Replace hex entities (&#x2013; -> en-dash)
-  result = result.replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCharCode(parseInt(code, 16)));
-  
+  result = result.replace(/&#x([0-9a-f]+);/gi, (_, code) =>
+    String.fromCharCode(parseInt(code, 16)),
+  );
+
   return result;
 }
 
 // Helper to get localized value (fallback to en_US) with HTML entity decoding
-export function getLocalizedValue(obj: Record<string, string> | string | undefined, lang = "en_US"): string {
+export function getLocalizedValue(
+  obj: Record<string, string> | string | undefined,
+  lang = "en_US",
+): string {
   if (!obj) return "";
-  const value = typeof obj === "string" ? obj : (obj[lang] || obj["en_US"] || Object.values(obj)[0] || "");
+  const value =
+    typeof obj === "string"
+      ? obj
+      : obj[lang] || obj["en_US"] || Object.values(obj)[0] || "";
   return decodeHtmlEntities(value);
 }
 
@@ -121,11 +133,15 @@ export function formatPrice(price: number | string | undefined): string {
 }
 
 // Format rating stars
-export function formatRating(rating: number | string | undefined, count: number | undefined): string {
+export function formatRating(
+  rating: number | string | undefined,
+  count: number | undefined,
+): string {
   if (!rating) return "";
   const num = typeof rating === "string" ? parseFloat(rating) : rating;
   if (isNaN(num)) return "";
-  const stars = "\u2605".repeat(Math.round(num)) + "\u2606".repeat(5 - Math.round(num));
+  const stars =
+    "\u2605".repeat(Math.round(num)) + "\u2606".repeat(5 - Math.round(num));
   return count ? `${stars} (${count})` : stars;
 }
 

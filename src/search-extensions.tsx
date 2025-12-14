@@ -5,7 +5,11 @@ import { searchExtensions, formatPrice, getLocalizedValue } from "./api";
 import { WooProduct } from "./types";
 
 // Get product type label
-function getProductType(product: WooProduct): { label: string; color: Color; icon: Icon } {
+function getProductType(product: WooProduct): {
+  label: string;
+  color: Color;
+  icon: Icon;
+} {
   if (product.is_theme) {
     return { label: "Theme", color: Color.Blue, icon: Icon.AppWindow };
   }
@@ -26,7 +30,11 @@ function getVendorUrl(product: WooProduct): string | null {
 export default function SearchExtensions() {
   const [searchText, setSearchText] = useState("");
 
-  const { data: results, isLoading, error } = useCachedPromise(
+  const {
+    data: results,
+    isLoading,
+    error,
+  } = useCachedPromise(
     async (query: string) => {
       if (!query.trim()) return [];
       return searchExtensions(query);
@@ -34,7 +42,7 @@ export default function SearchExtensions() {
     [searchText],
     {
       keepPreviousData: true,
-    }
+    },
   );
 
   return (
@@ -60,13 +68,16 @@ export default function SearchExtensions() {
         />
       )}
 
-      {!error && searchText.trim() !== "" && (!results || results.length === 0) && !isLoading && (
-        <List.EmptyView
-          icon={{ source: Icon.XMarkCircle }}
-          title="No Results"
-          description={`No products found for "${searchText}"`}
-        />
-      )}
+      {!error &&
+        searchText.trim() !== "" &&
+        (!results || results.length === 0) &&
+        !isLoading && (
+          <List.EmptyView
+            icon={{ source: Icon.XMarkCircle }}
+            title="No Results"
+            description={`No products found for "${searchText}"`}
+          />
+        )}
 
       {(results || []).map((product) => {
         const title = getLocalizedValue(product.title);
@@ -78,23 +89,34 @@ export default function SearchExtensions() {
         return (
           <List.Item
             key={product.objectID}
-            icon={icon ? { source: icon } : { source: productType.icon, tintColor: productType.color }}
+            icon={
+              icon
+                ? { source: icon }
+                : { source: productType.icon, tintColor: productType.color }
+            }
             title={title}
             accessories={[
               // Product type - subtle text instead of prominent badge
               { text: productType.label, icon: productType.icon },
               // Vendor with "by:" prefix
-              ...(product.vendor_name ? [{ text: `by: ${product.vendor_name}`, icon: Icon.Person }] : []),
+              ...(product.vendor_name
+                ? [{ text: `by: ${product.vendor_name}`, icon: Icon.Person }]
+                : []),
               // Price with coin icon
-              ...(product.price ? [{ text: formatPrice(product.price), icon: Icon.Coins }] : []),
+              ...(product.price
+                ? [{ text: formatPrice(product.price), icon: Icon.Coins }]
+                : []),
             ]}
             actions={
               <ActionPanel>
                 <ActionPanel.Section>
-                  <Action.OpenInBrowser url={permalink} title="Open Product Page" />
+                  <Action.OpenInBrowser
+                    url={permalink}
+                    title="Open Product Page"
+                  />
                   {vendorUrl && (
-                    <Action.OpenInBrowser 
-                      url={vendorUrl} 
+                    <Action.OpenInBrowser
+                      url={vendorUrl}
                       title={`Open ${product.vendor_name || "Vendor"} Profile`}
                       icon={Icon.Person}
                     />

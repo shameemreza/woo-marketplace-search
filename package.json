@@ -3,7 +3,7 @@
   "name": "woo-marketplace",
   "title": "Woo Marketplace",
   "description": "Search WooCommerce themes, extensions, and documentation directly from Raycast",
-  "icon": "command-icon.svg",
+  "icon": "icon.png",
   "author": "shameemreza",
   "categories": ["Developer Tools", "Web"],
   "license": "MIT",

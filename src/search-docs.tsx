@@ -7,7 +7,11 @@ import { WooDoc } from "./types";
 export default function SearchDocs() {
   const [searchText, setSearchText] = useState("");
 
-  const { data: results, isLoading, error } = useCachedPromise(
+  const {
+    data: results,
+    isLoading,
+    error,
+  } = useCachedPromise(
     async (query: string) => {
       if (!query.trim()) return [];
       return searchDocs(query);
@@ -15,7 +19,7 @@ export default function SearchDocs() {
     [searchText],
     {
       keepPreviousData: true,
-    }
+    },
   );
 
   // Get category tag for display
@@ -54,13 +58,16 @@ export default function SearchDocs() {
         />
       )}
 
-      {!error && searchText.trim() !== "" && (!results || results.length === 0) && !isLoading && (
-        <List.EmptyView
-          icon={{ source: Icon.XMarkCircle }}
-          title="No Results"
-          description={`No documentation found for "${searchText}"`}
-        />
-      )}
+      {!error &&
+        searchText.trim() !== "" &&
+        (!results || results.length === 0) &&
+        !isLoading && (
+          <List.EmptyView
+            icon={{ source: Icon.XMarkCircle }}
+            title="No Results"
+            description={`No documentation found for "${searchText}"`}
+          />
+        )}
 
       {(results || []).map((doc) => {
         const url = getUrl(doc);
@@ -73,7 +80,9 @@ export default function SearchDocs() {
             icon={{ source: Icon.Document, tintColor: Color.Blue }}
             title={title}
             subtitle={body}
-            accessories={[{ tag: { value: getCategory(doc), color: Color.Purple } }]}
+            accessories={[
+              { tag: { value: getCategory(doc), color: Color.Purple } },
+            ]}
             actions={
               <ActionPanel>
                 <Action.OpenInBrowser url={url} title="Open in Browser" />

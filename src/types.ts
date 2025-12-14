@@ -15,18 +15,18 @@ export interface WooProduct {
   sale_price?: number;
   rating?: number;
   review_count?: number;
-  
+
   // Vendor info
   vendor_id?: number;
   vendor_name?: string;
   vendor_slug?: string;
-  
+
   // Product type
   is_extension?: boolean;
   is_theme?: boolean;
   is_business_service?: boolean;
   productCategory?: string;
-  
+
   // Other
   slug?: string;
   tags_list?: string[];
