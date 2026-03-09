@@ -23,6 +23,7 @@ ehthumbs.db
 *.swo
 *.sublime-workspace
 *.sublime-project
+.cursor/
 
 # Logs
 *.log
