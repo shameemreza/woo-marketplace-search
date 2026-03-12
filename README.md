@@ -11,13 +11,19 @@ Search WooCommerce.com themes, extensions, and documentation directly from Rayca
 - **Quick Actions:** Open in browser, copy URLs, copy titles.
 
 <p align="center">
-  <img src=".github/demo/screenshot-1.png" alt="Search Woo Products" width="800">
+  <img src="media/woo-marketplace-search-1.png" alt="Search Woo Products" width="800">
 </p>
 <p align="center">
-  <img src=".github/demo/screenshot-2.png" alt="Search Woo Docs" width="800">
+  <img src="media/woo-marketplace-search-2.png" alt="Search Woo Products - Results" width="800">
 </p>
 <p align="center">
-  <img src=".github/demo/demo.gif" alt="Demo" width="800">
+  <img src="media/woo-marketplace-search-3.png" alt="Search Woo Docs" width="800">
+</p>
+<p align="center">
+  <img src="media/woo-marketplace-search-4.png" alt="Search Woo Docs - Results" width="800">
+</p>
+<p align="center">
+  <img src="media/demo.gif" alt="Demo" width="800">
 </p>
 
 ## Quick Access
@@ -92,8 +98,11 @@ woo-marketplace-search/
 ├── assets/
 │   ├── icon.png               # Extension icon
 │   └── command-icon.svg       # Command icon (SVG)
+├── media/                     # README screenshots & demo
+├── metadata/                  # Store screenshots
 ├── package.json               # Raycast extension manifest
 ├── tsconfig.json              # TypeScript configuration
+├── CHANGELOG.md               # Version history
 └── README.md
 ```
 
